@@ -1,0 +1,441 @@
+extends layout
+
+block content
+    .row(style="padding-top: 10px; background-color: #f1f1f1; width: calc(100% - 10px); margin-left:5px; margin-right: 5px; height: calc(100% - 102px); font-family: Segoe UI,Helvetica Neue,Helvetica,Arial,Verdana")
+      #sprintsPanel.col-lg-2.col-md-2.col-md-offset-0.col-sm-12.col-xs-12(style="background-color: white;")
+        .row.col-md-12.col-xs-6(style="margin-top:10px")
+          a(onclick="sprintChanged('all')" ) All sprints
+          for sprint in sprints
+           .row#sprintRow
+             - var link = "sprintChanged(" + "'" + sprint._id + "'" + ")"
+             a(onclick=link value=sprint.id) #{sprint.SprintN}
+        .row.col-md-12.col-xs-6(style="margin-top:30px")
+          h6 Employees:
+          for employee in Employees
+             .row#employeeRow(style=" margin-left:10px")
+                - var txt = "/profile?user=" + employee._id
+                a#FullNameAndTitle(href= txt style="width: 100%;display: inline-block; font-weight:bold; font-size:15px;" value=employee._id) #{employee.FullName}
+        .row.col-md-12.col-xs-12(style="margin-top:30px")
+          b(style="display: block;") #{nuserstories} total work items.
+          b(style="display: block; color: #00b7ff; margin-left:10px") #{nus} total user stories.
+          b(style="display: block; color: red; margin-left:10px") #{nbugs} total bugs.
+      #hidden.col-md-8.col-md-offset-1(style="margin-left:0px; overflow-y:auto; display: none")
+      .col-lg-10.col-md-10.col-md-offset-0.col-sm-12.col-xs-12#area(style="margin-left:0px;height: 100%; overflow-x: scroll; overflow-y:hidden;")
+           #headerText.row(style="margin-left: 5px;")
+               h6 User stories for project: #{projectTitle}
+           #buttonsPanel.row(style="margin-bottom:10px; margin-left: 5px; padding-bottom: 10px; border-bottom: 1px solid gray;")
+               button.btn.btn-primary.btn-xs(onclick='optionChanged(false);' style="margin-right:10px; line-height: 15px;") Backlog
+               button.btn.btn-primary.btn-xs(onclick='optionChanged(true);' style="line-height: 15px; margin-right: 10px;") Board
+               a.btn.btn-primary.btn-xs(onclick="buttonClick.click()", data-toggle="modal;" style="line-height: 15px") &plus; Add User Story
+           #headerBacklog.col-md-12(style="min-width: 970px; margin-bottom:5px; width:calc(100% - 7px); border: 2px solid black; height: 30px; font-size:15px; margin-left: 5px; padding-left: 14px !important;")
+                   b(style="display: inline-block; width: 110px;") User Story ID 
+                   b(style="display: inline-block; width: 300px") | Title
+                   b(style="display: inline-block; width: 100px") | State
+                   b(style="display: inline-block; width: 100px") | Release
+                   b(style="display: inline-block; width: 100px") | Hours
+                   b(style="display: inline-block; width: 100px") | Story Points
+                   b(style="display: inline-block; width: 100px") | Assigned to
+           .row#board(style="overflow-y: scroll; margin-left: 5px; display:none")
+             .col-lg-12.col-md-12.col-sm-12.col-xs-12
+               each userstory, i in userstories		   
+                      if userstory.isBug
+                         - inline = "padding: 10px 10px; background-color: lightsalmon; margin-bottom: 10px; border: solid 6px rgb(204, 41, 61)"
+                      else
+                         - inline = "padding: 10px 10px; background-color: aliceblue; margin-bottom: 10px; border: solid 6px #009ccc"
+                      div.col-lg-4.col-md-6.col-sm-6.col-xs-12.user-story-board()
+                        .col.xs-12.user-story-board-inner(style=inline value=userstory._id)
+                          button#btnedit.btn.btn-primary.btn-xs(onclick="getData(this.value);" value=userstory._id style="font-weight:bold; float:right; line-height: 0.5;") Edit
+                          pre(style="font-weight:bold;") #{userstory.USID}
+                          pre(style="font-weight:bold;") #{userstory.Title}
+                          pre Estimated Hours: #{userstory.EstimatedHours}
+                          pre Completed Hours: #{userstory.HoursSpent}
+                          pre Release:         #{userstory.Release}
+                          pre Story Points:    #{userstory.StoryPoints}
+                          pre Release:         #{userstory.Release}
+                          pre.assigned #{userstory.AssignedTo}
+                          pre(style="display:none") #{userstory.SprintN}
+           .row#backlog(style="overflow-y: auto; min-width: 1070px; margin-left: 5px; display: none")
+               each userstory, i in userstories
+                  if userstory.isBug
+                     - inline = "margin-bottom:3px; background-color: lightsalmon; height:30px;border: solid 2px rgb(204, 41, 61) ;height: 30px;"
+                  else
+                     - inline = "margin-bottom:3px; background-color: aliceblue; height:30px;border: solid 2px #009ccc;height: 30px"
+                  .col-md-12.user-story-backlog(style=inline)
+                      b(style="display: inline-block; width: 110px") #{userstory.USID}
+                      p(style="display: inline-block; width: 300px") | #{userstory.Title}
+                      p(style="display: inline-block; width: 100px") | #{userstory.State}
+                      p(style="display: inline-block; width: 100px") | #{userstory.Release}
+                      p(style="display: inline-block; width: 100px") | #{userstory.EstimatedHours}
+                      p(style="display: inline-block; width: 100px") | #{userstory.StoryPoints}
+                      p.assigned2(style="display: inline-block; width: 200px") #{userstory.AssignedTo}
+                      p(style="display: none; width: 200px") | #{userstory.SprintN}
+    a#buttonClick.btn.btn-primary.btn-lg(href="#myModal", data-toggle="modal" style="display:none") &plus;
+    #myModal.modal(tabindex="-1", role="dialog", aria-labelledby="myModal", aria-hidden="true")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                     button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+                     h6.modal-title(style="font-weight:bold") Add a User Story
+                .modal-body#formAddUS
+                     p Body Content
+                     form(method='POST' action='/userStories')
+                       div.form-group
+                        label(for='USIDAdd') User Story ID:
+                        input#USIDAdd.form-control(type='text', placeholder='User Story ID' name='USIDAdd')
+                       div.form-group
+                        label(for='DescriptionAdd') Description: 
+                        input#DescriptionAdd.form-control(type='text', placeholder='Description' name='DescriptionAdd')
+                       div.form-group
+                        label(for='TitleAdd') Title:
+                        input#TitleAdd.form-control(type='text', placeholder='Title' name='TitleAdd')
+                       div.form-group
+                        label(for='EstimatedAdd') Estimated hours:
+                        input#EstimatedAdd.form-control(type='text', placeholder='Estimated hours' name='EstimatedAdd')     
+                       div.form-group
+                        label(for='ReleaseAdd') Release:
+                        input#ReleaseAdd.form-control(type='text', placeholder='Release' name='ReleaseAdd')  
+                       div.form-group
+                        label(for='StoryPointAdd') Story Points:
+                        input#StoryPointAdd.form-control(type='text', placeholder='Story Points' name='StoryPointAdd')
+                       div.form-group
+                        label(for="USAdd", style="margin-left:20%") User Story
+                        input(type="radio", id="USAdd" name="USorBugAdd", value="1", checked="checked")
+                        label(for="BugAdd",  style="margin-left:28%") Bug
+                        input(type="radio", id="BugAdd" name="USorBugAdd", value="0")
+                .modal-footer
+                     #AddUS.button.btn.btn-primary(type='submit') Add User Story
+                     button#closeButton.btn.btn-default(type="button", data-dismiss="modal") Close  
+    a#editButtonClick.btn.btn-primary.btn-lg(href="#myModal3", data-toggle="modal" style="display:none") &plus;
+    #myModal3.modal(tabindex="-1", role="dialog", aria-labelledby="myModal", aria-hidden="true")
+        .modal-dialog(style="width:1200px")
+            .modal-content(style="width:1200px")
+                .modal-header
+                     button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+                     h4.modal-title(style="font-weight:bold") Edit/View User Story
+                .modal-body#editUserStory
+                 .row(style="border-bottom: 2px solid  gray; margin-bottom: 20px")
+                   div(style="display: inline-block; margin-left: 15px")
+                     a#USIDText(style="font-size:23px") User Story 305:
+                   div(style="display: inline-block;")
+                     h4#USTitle  Edit the functionality of checkout
+                 .row(style="" )
+                   .col-xs-12(style="background-color: #DDD; height: 183px;")
+                     .col-xs-3
+                          b(style="font-size:15px") Status
+                          .row(style="margin-left:10px")
+                           p(style="display: inline-block; margin-bottom: 10px;") Bug Status: 
+                           select#State(style="display: inline-block; float:right" name="status")
+                             option(value="new") New
+                             option(value="active") Active
+                             option(value="resolved") Resolved
+                             option(value="closed") Closed
+                          .row(style="margin-left:10px")
+                              p(style="display: inline-block; margin-bottom: 10px;") Assigned To: 
+                              select#AssignedTo(style="display: inline-block;float:right" name="AssignedTo")
+                                option(value="AssignedToDef") Select an employee
+                                for employee in Employees
+                                  option(value=employee._id) #{employee.FullName}
+                          .row(style="margin-left:10px")
+                             p(style="display: inline-block; margin-bottom: 10px;") Original Estimate:
+                             input#EstimatedHours(type='text',name='EstimatedHours', style="font-size: 12px; display: inline-block;float:right")
+                          .row(style="margin-left:10px;;")
+                             p(style="display: inline-block; margin-bottom: 10px;") Completed:
+                             input#HoursSpent(type='text',name='HoursSpent', style="font-size: 12px; display: inline-block;float:right")
+                          .row(style="margin-left:10px;")
+                             p(style="display: inline-block; margin-bottom: 10px;") Story Points:
+                             input#StoryPoints(type='text',name='StoryPoints', value="", style="font-size: 12px; display: inline-block;float:right")
+                          .row(style="margin-left:10px") 
+                             p(style="display: inline-block; margin-bottom: 10px;") Override Parent US
+                             input#addParent.plus2(type='text', name="addParent", style="font-size: 15px; width: 100px; display: inline-block;float:right")
+                     .col-xs-6(style="background-color: #FFF; height:100%; max-height:183px; overflow-y:auto; overflow-x:hidden;")
+                      b Links
+                      .row(style="margin-left:10px;")
+                        p(style="margin-bottom:0px") Parent US
+                        .row
+                         .col-xs-1
+                         .col-xs-11#USParentPlaceholder(style="width: 100%;")
+                           p(style="margin-left:10px; color: red;") No parent US
+                      .row(style="margin-left:10px;")
+                        p(style="margin-bottom:0px") Child US
+                        .row
+                         .col-xs-1
+                         #USChilds.col-xs-11(style="width: 100%;")
+                           p(style="margin-left:10px; color: red;") No child US
+                      .row(style="margin-left:10px;")
+                        p(style="margin-bottom:0px") Related US
+                        .row
+                         .col-xs-1
+                         #USRelatives.col-xs-11(style="width: 100%;")
+                           p(style="margin-left:10px; color: red;") No relative US
+                     .col-xs-3
+                      b Data
+                      .row(style="margin-left:10px")
+                          p(style="display: inline-block; margin-bottom: 10px;") SprintN: 
+                          select#SprintN(style="display: inline-block;float:right" name="SprintN")
+                            option(value="SprintNDef") Choose Sprint
+                            for sprint in sprints
+                              option(value=sprint._id) #{sprint.SprintN}
+                      .row(style="margin-left:10px")
+                        p(style="display: inline-block; margin-bottom: 10px;") Release:
+                        input#Release(type='text', name='Release', style="font-size: 12px; display: inline-block;float:right")
+                      .row(style="margin-left:10px;")
+                        p(style="margin-bottom:10px;display: inline-block") Requirement Link:
+                        a#RequirementLink(style="font-size: 15px; display: inline-block; float: right;") Req 204
+                      .row(style="margin-left:10px;")
+                        p(style="margin-bottom:10px;display: inline-block") Project Link:
+                        a#ProjectLink(style="font-size: 15px; display: inline-block; float: right;") Project 207
+                      .row(style="margin-left:10px")                        
+                        p(style="margin-bottom:10px;display: inline-block; margin-bottom: 10px;") Add Child US
+                        input#addChild.plus(type='text', name="addChild" style="font-size: 15px; display: inline-block;float:right")
+                      .row(style="margin-left:10px") 
+                        p(style="display: inline-block; margin-bottom: 10px;") Add Relative US
+                        input#addRelative.plus(type='text', name="addRelative", style="font-size: 15px; display: inline-block;float:right")
+                   .col-xs-9
+                     div(style="display: inline-block; margin-left:10px; margin-bottom:10px;font-size: 15px;")
+                       a#DESCText(style="display:none; font-weight:bold" onclick="description(true)") Description | 
+                       a#COAText(style="display:none" onclick="description(false)") Conditions of Acceptance 
+                       a#REPROText(style="display:none;font-weight:bold" onclick="repro(true)") Repro Steps |
+                       a#TCASEText(style="display:none" onclick="repro(false)") Test Cases 
+                     div(style="display: inline-block; margin-left: 15px; width: 100%")
+                       textarea#DESC(value="As a user, I want to be able to..." style="font-size: 20px; height: 150px; width: 95%; display:none")
+                       textarea#COA(value="COA 1: The user should be able to ..." style="font-size: 20px; height: 150px; width: 95%; display:none;")
+                       textarea#REPRO(value="As a user, I want to be able to..." style="font-size: 20px; height: 150px; width: 95%;  display:none")
+                       textarea#TCASE(value="COA 1: The user should be able to ..." style="font-size: 20px; height: 150px; width: 95%; display:none ")
+                .modal-footer
+                     #Save.button.btn.btn-primary(onclick="updateUS()" type='submit') Save Changes
+                     button#closeEdit.btn.btn-default(type="button", data-dismiss="modal") Close  
+    .loadingGif
+block scripts	  
+   script.
+      window.onload = function(e){
+         $(".assigned").each(function(){
+           if($(this).text().length > 1){
+             $(this).text("Assigned to:     " + $("#FullNameAndTitle[value='" + $(this).text().trim() + "']").text() )
+           }
+         })
+         $(".assigned2").each(function(){
+           if($(this).text().length > 1){
+             $(this).text($("#FullNameAndTitle[value='" + $(this).text().trim() + "']").text() )
+           }
+         })
+         optionChanged(#{view})
+         if(window.innerWidth > 768){
+           $("#board").css("max-height",   ($(window).height() - 120 - $("#buttonsPanel").outerHeight(true) - $("#headerText").outerHeight(true) ))
+           $("#backlog").css("max-height", ($(window).height() - 120 - $("#buttonsPanel").outerHeight(true) - $("#headerText").outerHeight(true) - $("#headerBacklog").height() ))
+         }
+         else{
+           $("#board").css("max-height",   ($(window).height() - 120 - $("#buttonsPanel").outerHeight(true) - $("#headerText").outerHeight(true) - $("#sprintsPanel").height() ))	
+           $("#backlog").css("max-height", ($(window).height() - 120 - $("#buttonsPanel").outerHeight(true) - $("#headerText").outerHeight(true) - $("#sprintsPanel").height() - $("#headerBacklog").height() ))
+        }
+      };
+      function optionChanged(setBoard){
+        $("#hidden").css("display", "none")
+        if(setBoard){
+           $("#board").css("display", "block")
+           $("#backlog").css("display", "none")
+           $("#headerBacklog").css("display", "none")
+           window.history.pushState("", "", "/overview?view=board");
+        }
+        else{
+           $("#board").css("display", "none")
+           $("#backlog").css("display", "block")
+           $("#headerBacklog").css("display", "block")
+           window.history.pushState("", "" , "/overview?view=backlog");	   
+        }
+      };
+      function updateUS(){
+        $.ajax({
+          url:"/updateUS",
+          async: false,
+          type:"post",
+          data: {_id: $("#editUserStory").attr("value"), StoryPoints: $("input[name=StoryPoints]").val(), EstimatedHours: $("input[name=EstimatedHours]").val(),
+          Release: $("input[name=Release]").val(), HoursSpent: $("input[name=HoursSpent]").val(), State: $("#State option:selected").text(), AssignedTo: $("#AssignedTo option:selected").val(),
+          SprintN: $("#SprintN option:selected").val(), Description: $("#DESC").val(), COAs: $("#COA").val(), ReproSteps: $("#REPRO").val(), TestCases: $("#TCASE").val() },
+          success:function(data2){
+          $("#closeEdit").click()
+          $("body").addClass("loading")
+          location.reload()
+          }
+        })
+      }
+      function getData(_id){
+        $("#editButtonClick").click()
+        clearModal()
+        var result="";
+        $.ajax({
+          url:"/getData",
+          data: {_id: _id},
+          async: false,
+          type: "POST",
+          success:function(data) {
+           resultAll = data;
+           result = JSON.parse(data.UserStory)
+           if(data.Requirement && data.Requirement.length > 0 && data.Requirement != "null"){
+              $("#RequirementLink").text(JSON.parse(data.Requirement).IDTag)
+              $("#RequirementLink").attr("href", "/changeThisWhenRequirementHREFUpdated")
+           }
+           if(data.Project && data.Project.length > 0 && data.Project != "null"){
+              $("#ProjectLink").text(JSON.parse(data.Project).Title)
+              $("#ProjectLink").attr("href", "/changeThisWhenRequirementHREFUpdated")
+           }
+           if(data.USParent && data.USParent.length > 0 && data.USParent != "null"){
+               var str = "<a style='font-size: 15px; margin-left:10px; width:100%; display: inline-block'>" + data.USParent[0].USID + ":" + data.USParent[0].Title + " </a>"
+               $("#USParentPlaceholder").html(str)
+           }
+           if(data.USChild && data.USChild.length > 0 && data.USChild != "null"){
+             var allChildUS = ""
+             var str = "<a style='font-size: 15px; margin-left:10px; width:100%; display: inline-block'>"
+             for(var i = 0; i < data.USChild.length; i++){
+                allChildUS += str + data.USChild[i].USID + ": " + data.USChild[i].Title + "</a>"
+             }
+             $("#USChilds").html(allChildUS)
+           }
+           if(data.USRelative && data.USRelative.length > 0 && data.USRelative != "null"){
+             var allChildUS = ""
+             var str = "<a style='font-size: 15px; margin-left:10px; width:100%; display: inline-block'>"
+             for(var i = 0; i < data.USRelative.length; i++){
+                allChildUS += str + data.USRelative[i].USID + ": " + data.USRelative[i].Title + "</a>"
+             }
+             $("#USRelatives").html(allChildUS)
+           }
+           $("#editUserStory").attr("value", _id)
+           $("input[name=StoryPoints]").attr("value", result.StoryPoints)
+           $("input[name=EstimatedHours]").attr("value", result.EstimatedHours)
+           $("input[name=HoursSpent]").attr("value", result.HoursSpent)
+           $("input[name=Release]").attr("value", result.Release)
+           var text2 = "select option[value='" + result.SprintN + "']"
+           $(text2).prop("selected",true)
+           text2 = "select option[value='" + result.AssignedTo + "']"
+           $(text2).prop("selected", true)
+           text2 = "select option[value='" + result.State + "']"
+           $(text2.toLowerCase()).prop("selected", true)
+           if(result.isBug){ 
+              $("#DESC").css("display", "none")
+              $("#COA").css("display", "none")
+              $("#DESCText").css("display", "none")
+              $("#COAText").css("display", "none")
+              $("#REPRO").css("display", "block")
+              $("#TCASE").css("display", "none")
+              $("#REPROText").css("display", "inline-block")
+              $("#TCASEText").css("display", "inline-block")
+           }else{
+              $("#DESC").css("display", "block")
+              $("#COA").css("display", "none")
+              $("#DESCText").css("display", "inline-block")
+              $("#COAText").css("display", "inline-block")
+              $("#REPRO").css("display", "none")
+              $("#TCASE").css("display", "none")
+              $("#REPROText").css("display", "none")
+              $("#TCASEText").css("display", "none")
+           }
+           $("#DESC").text(result.Description)
+           $("#COA").text(result.COAs)
+           $("#REPRO").text(result.ReproSteps)
+           $("#TCASE").text(result.TestCases)
+           $("#USIDText").html(result.USID + ":")
+           $("#USTitle").html(result.Title)
+           var val = "#AssignedTo option:eq(" + result.AssignedTo + ")"
+           $(val).attr("select", "selected")
+          }
+        });
+        return result;
+      }
+      $(".plus").click(function(e) {
+         var x = e.pageX - $(this).offset().left;
+         var y = e.pageY - $(this).parent().parent().offset().top;
+         if(x > 142){
+           if(y < 143){
+              addUSLink( $("input[name=addChild]").val() , true, false)
+           }
+           else{
+              addUSLink( $("input[name=addRelative]").val() , false, false)
+           }
+         }
+      })
+      $(".plus2").click(function(e) {
+         if((e.pageX - $(this).offset().left) > 80)
+           addUSLink( $("input[name=addParent]").val() , false, true)
+      })
+      function addUSLink(USID, child, parent){
+        $.ajax({
+          url:"/addUSLink",
+          async: false,
+          type:"post",
+          data: {_id: $("#editUserStory").attr("value"), isChild: child, isParent: parent, UserStoryID: USID},
+          success: function(data){
+            alert(JSON.stringify(data))
+             var str = "<a style='font-size: 15px; margin-left:10px; width: 100%; display: inline-block'>" + data.US.USID + ": " + data.US.Title + "</a>"
+             if(data.type == "1"){
+                $("#USParentPlaceholder").html(str)
+             }
+             else if(data.type == "2"){
+               $("#USChilds").append(str)
+             }
+             else{
+               $("#USRelatives").append(str)
+             }
+          }
+        })
+      }
+      function clearModal(){
+         $("#StoryPoints").attr("value", "")
+         $("#EstimatedHours").attr("value", "")
+         $("#HoursSpent").attr("value", "")
+         $("#SprintN").attr("value", "")
+         $("#AssignedTo").attr("value", "")
+         $("#State").attr("value", "")
+         $("#Release").attr("value", "")
+         $("select option[value='AssignedToDef']").prop("selected", true)
+         $("select option[value='SprintNDef']").prop("selected", true)
+         $("select option[value='new']").prop("selected", true)
+         $("#RequirementLink").text("")
+      }
+      function description(desc){
+         $("#DESC").css("display", desc ? "block" : "none")
+         $("#COA").css("display", desc ? "none" : "block")
+         $("#DESCText").css("font-weight", desc ? "bold" : "normal")
+         $("#COAText").css("font-weight", desc ? "normal" : "bold")
+      }
+      function repro(repro){
+         $("#REPRO").css("display", repro ? "block" : "none")
+         $("#TCASE").css("display", repro ? "none" : "block")
+         $("#REPROText").css("font-weight", repro ? "bold" : "normal")
+         $("#TCASEText").css("font-weight", repro ? "normal" : "bold")
+      }
+      function sprintChanged(sprintN){
+        if(sprintN == "all"){
+          $(".user-story-board").css("display","block")
+          $(".user-story-backlog").css("display","block")
+        }
+        else{
+        $(".user-story-board").css("display","none")
+        $(".user-story-backlog").css("display","none")
+        var searchStr = ".user-story-board :contains(" + sprintN + ")"
+        $(searchStr).parent().css("display","block")
+        var searchStr2 = ".user-story-backlog :contains(" + sprintN + ")"
+        $(searchStr2).parent().css("display","block")
+        }
+      }
+      $(function() {
+        $("#AddUS").click(function() {
+         $.ajax({
+         type: "POST",
+         url: "/userstories",
+         data: {isAJAX: true, USID: $("#USIDAdd").val(), Description: $("#DescriptionAdd").val(), Title: $("#TitleAdd").val() , USorBug: $('input[name="USorBugAdd"]:checked').val(), Estimated: $("#EstimatedAdd").val()  , Release: $("#ReleaseAdd").val(), StoryPoints: $("#StoryPointsAdd").val()},
+         success: function() {
+           $('#formAddUS').html("<div id='message'></div>");
+           $('#message').html("<h2>User Story added successfully</h2>")
+           .hide()
+           .fadeIn(1500, function() {
+          });
+           $('#AddUS').css("display", "none")
+           $(document).on("click", "#closeButton", function(){
+              location.reload()
+           });
+          }
+         });
+        });
+        });
+        $(window).resize(function() {
+        });
+	  

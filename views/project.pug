@@ -1,0 +1,39 @@
+﻿extends layout
+
+block content
+    .row(style="background-color: #f1f1f1; padding-top: 10px;")
+      .col-md-8.col-md-offset-2
+         h5 Select the project you want to navigate to or add new project(s)
+         each project in projects
+             div(style="width:100%;margin-left:15px")
+                div.row(style="width: 100%;")
+                  label(for='title' style="font-size: 25px; width: 30%;") Project ID/Title: 
+                  a#title.nav-item.nav-link(href='/project/?project=' + project._id style="font-size: 25px;width: 60%;" ) #{project.ProjectID}
+                div.row(style="width: 100%;")
+                  label(for='Description' style="width: 30%;display: inline-block;") Description:
+                  h6#Description(style="width: 60%;display: inline-block;") #{project.DescriptionTag}
+                div.row(style="width: 100%;")
+                  label(for='ProductOwner' style="width: 30%;display: inline-block;") Product Owner: 
+                  h6#ProductOwner(style="width: 60%;display: inline-block;") #{project.ProductOwner}
+                div.row(style="width: 100%;")
+                  label(for='ProductManager' style="width: 30%;display: inline-block;") Product Manager: 
+                  h6#ProductManager(style="width: 60%;display: inline-block;") #{project.ProductManager}
+         div#newProject(style="margin-top:50px; font-size:15px")
+            h3 Add a new project:
+            form(method='POST' action='/addProject')
+              div.form-group
+                 label(for='ProjectID') Project Title/ID:
+                 input#ProjectID.form-control(type='text', placeholder='Project Title/ID' name='ProjectID')
+              div.form-group
+                 label(for='ProjectName') Project Name:
+                 input#ProjectName.form-control(type='text', placeholder='Project Name' name='ProjectName')
+              div.form-group
+                 label(for='DescriptionTag') Description:
+                 input#DescriptionTag.form-control(type='text', placeholder='Description' name='DescriptionTag')
+              div.form-group
+                 label(for='ProductOwner') ProductOwner:
+                 input#ProductOwner.form-control(type='text', placeholder='Product Owner' name='ProductOwner')
+              div.form-group
+                 label(for='ProductManager') Product Manager:
+                 input#ProductManager.form-control(type='text', placeholder='Product Manager' name='ProductManager')
+              button.btn.btn-primary(type='submit') Add Project

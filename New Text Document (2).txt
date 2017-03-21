@@ -1,0 +1,57 @@
+Requirement         	        Project               User              UserStory	    Sprint
+--------------------------------------------------------------------------------------------------------------------------------------
+ProjectID               T	ProjectID         T   EmployeeID  T     USID    	T   SprintN	  T
+IDTag		        T	DescriptionTag    F   FullName    T	Title		T   UserStory[]   F 
+DescriptionTag          T	PO                F   Title       T	State		F   Project	  T
+AuthorTag               F	PM                F   Email       T	AssignedTo(User)F	
+AssignedTo(User)        F       Employees[(User)] F   password    T	ParentUS	F
+UserStory[]             F       ProjectName       T   Project[]   F     ChildUS		F
+				Requirements[]	  F    		        RelativeUS	F												
+				UserStory[]	  F			HoursSpent	F
+				Sprints[]	  F			EstimatedTime	F
+				OwnedBy(User)     T       		Release		F
+							SprintN		F
+									Requirement	F
+									Discussion	F
+									Attachment	F
+									StoryPoints	F
+									COA		F
+									TestCases[]	F
+									isBug           T
+									ReproSteps      F
+									Project         T
+
+$(".user-story-board").css("display","none")
+$(".user-story-board :contains(586d09c6b84b544c98df9b69)").parent().css("display","none")
+
+
+User         - EmployeeID, FullName, Email, Title, and Password
+	User is registered. 
+	User can add projects. User is automatically added as instance in OwnedBy in the project.
+
+Project      - ProjectID, Title, DescriptionTag, PO, PM, ProjectName
+	User creates project. User is automatically added as OwnedBy instance in the project.
+	User assigns employees in the project using EmployeeID.
+	Requirements created are automatically added to the current working project. (See below in Requirements section).
+	User Stories created are automatically added to the current working project. (See below in User Story section).
+	Sprints created are automatically added to the current working project.      (See below in Sprint section).
+
+Requirements - ProjectID, IDTag, DescriptionTag, AuthorTag       
+	User creates requirement. Requirement is automatically added to the current working project.
+	User assigns employee to requirement (AssignedTo) using EmployeeID. 
+	User assigns user stories to requirement using USID.
+	When an user story has attribute "Requirement", that specific requirement will automatically add the user story to its user story array.
+
+User Story  -  ProjectID, USID, Title, isBug
+	User creates user stories. User Stories are automatically added to the current working project.
+	User can add another a user to AssignetTo attribute.
+	User can add references to other user stories as relative/parent/child US.
+	User can add references to the requirement from which the US was created.
+	User can specify the sprint iteration in which the US belongs. If user does it, the US will automatically be added to Sprint-s list of US.
+	If US is a bug (isBug), user can add repro steps.
+
+Sprint -  SprintN
+	User creates sprint. Sprint is automatically added to the current working project.
+	User can add user stories to sprint. If the user does it, the US added will automatically add this US as a SprintN reference.
+
+

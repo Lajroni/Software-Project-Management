@@ -1,0 +1,27 @@
+{{#> index title="overview"}}
+    {{#*inline "content-block"}}
+<div class="row" id="inc" style="padding-top: 10px;background-color: gray; font-family: Segoe UI,Helvetica Neue,Helvetica,Arial,Verdana">
+    <div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2" style="border: 5px solid black; padding: 10px 10px 10px 10px; background-color: #f1f1f1; margin-bottom:20px; margin-top:20px;">
+        <h1 class="display-4 m-b-2">Log In</h1>
+        <form method="POST" action="/login">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input class="form-control" type="text" id="email" placeholder="email" name="email"/>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input class="form-control" type="password" id="password" placeholder="password" name="password"/>
+            </div>
+            <div style="text-align:center; width:100%">
+                <button class="btn btn-primary" type="submit">Log in</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    window.onload = function (e) {
+        document.getElementById("inc").style.height = window.innerHeight  + "px"
+    }
+</script>
+{{/inline}}
+{{/index}}

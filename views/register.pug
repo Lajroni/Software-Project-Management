@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  .row(style="padding-top: 10px;background-color: #f1f1f1; font-family: Segoe UI,Helvetica Neue,Helvetica,Arial,Verdana")
+    .col-md-6.col-md-offset-3.col-xs-8.col-xs-offset-2
+      h1.display-4.m-b-2 Sign Up
+      
+      // register form
+      form(method='POST' action='/register')
+        div.form-group
+          label(for='name') Full Name:
+          input#name.form-control(type='text', placeholder='First and Last Name' name='name')
+        div.form-group
+          label(for='email') Email:
+          input#email.form-control(type='email', placeholder='name@email.com' name='email')
+        div.form-group
+          label(for='Title') Title:
+          input#Title.form-control(type='text', placeholder='Title' name='Title')
+        div.form-group
+          label(for='EmployeeID') EmployeeID:
+          input#EmployeeID.form-control(type='text', placeholder='EmployeeID' name='EmployeeID')
+        div.form-group
+          label(for='pw') Password:
+          input#pw.form-control(type='password' name='password')
+        div.form-group
+          label(for='pw2') Confirm Password:
+          input#pw2.form-control(type='password' name='confirmPassword')
+        button.btn.btn-primary(type='submit') Sign up

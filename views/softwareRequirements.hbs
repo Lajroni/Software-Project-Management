@@ -1,0 +1,40 @@
+{{#> index title="overview"}}
+    {{#*inline "content-block"}}
+<div id="inc" class="row" style="padding-top: 10px;background-color: gray; font-family: Segoe UI,Helvetica Neue,Helvetica,Arial,Verdana">
+    <div  class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1" style="background-color: #f1f1f1; border: 5px solid black;padding: 10px 10px 10px 10px; margin-bottom:20px; margin-top:20px;">
+        <h3>Requirements for project: {{projectTitle}}
+          {{#each requirements}}
+            <div style="width:100%; margin-bottom: 50px">
+                <h6>ID: {{IDTag}}</h6>
+                <h6>Description: {{DescriptionTag}}</h6>
+                <h6>Author: {{AuthorTag}}</h6>
+            </div>
+          {{/each}}
+        </h3>
+        <h4 style="margin-top:100px">Add requirements to project</h4>
+        <div style="font-size:15px">
+            <form method="POST" action="/softwareRequirements">
+                <div class="form-group">
+                    <label for="IDtag">ID:</label>
+                    <input class="form-control" id="IDtag" type="text" placeholder="ID" name="IDtag"/>
+                </div>
+                <div class="form-group">
+                    <label for="DescriptionTag">Description: </label>
+                    <input class="form-control" id="DescriptionTag" type="text" placeholder="Descripion" name="DescriptionTag"/>
+                </div>
+                <div class="form-group">
+                    <label for="AuthorTag">Author:</label>
+                    <input class="form-control" id="AuthorTag" type="text" placeholder="Author" name="AuthorTag"/>
+                </div>
+                <button class="btn btn-primary" type="submit">Add Requirement</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    window.onload = function (e) {
+        document.getElementById("inc").style.height = window.innerHeight  + "px"
+    }
+</script>
+{{/inline}}
+{{/index}}

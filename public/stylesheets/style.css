@@ -1,0 +1,302 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+a {
+  color: #00b7ff;
+}
+
+
+/* Base Styles */
+
+body {
+	background-size: cover; 
+}
+
+a:hover {
+	color: rgba(49,176,213, .7);
+}
+
+/* Component Styles */
+
+.navbar {
+	padding: 1rem 0;
+	background: rgba(0,0,0, .25);
+}
+.lead {
+	margin-bottom: 2.5rem;
+}
+.main {
+	color: #fff;
+	min-height: calc(100vh - 34px);
+}
+.foot {
+	font-size: .85rem;
+	padding: .5rem 0;
+	color: rgba(255,255,255, .6);
+}
+
+/* Modifier Styles */
+
+.nav-items .nav-link {
+	margin: 0 1rem;
+}
+.navbar-brand {
+	margin: 0;
+}
+.navbar .nav-link,
+.navbar .btn {
+	text-transform: uppercase;
+	font-size: .95rem;
+}
+.list-group {
+	color: initial;
+}
+.label {
+	font-size: .88rem;
+	vertical-align: top;
+	margin: 3px 0 0 4px;
+}
+
+/* Button Styles */
+
+.btn-primary {
+	background: #417aba;
+	border-color: #417aba;
+}
+.btn-info {
+	background-color: #31b0d5;
+	border-color: #2aabd2;
+}
+.btn-info:hover {
+	background-color: #5bc0de;
+	border-color: #5bc0de;
+}
+.btn-light {
+	color: rgba(255,255,255, .75);
+	background: rgba(255,255,255, .12);
+}
+.btn-light:hover {
+	background: rgba(255,255,255, .2);	
+}
+.active,
+.btn {
+	transition: .4s;
+}
+
+/* Icon Styles */
+
+.icn-logo {
+	margin: 3px 3px 0;
+	float: left;
+}
+.icn-person {
+	font-size: 50px;
+	border-radius: 50%;
+	border: solid 2px;
+	padding: .5rem;
+}
+.avatar {
+	width: 35px;
+	margin-right: 18px;
+	border: solid 2px rgba(255,255,255, .75);
+}
+.options {
+	display: none;
+}
+.list-group-item:hover .options {
+	display: block;
+}
+.options .material-icons {
+	font-size: 1.25rem;
+	cursor: pointer;
+	margin-left: 1rem;
+	color: rgba(0,0,0, .35);
+}
+.options .material-icons:hover {
+	color: initial;
+}
+
+
+.favorite-book {
+  margin-top: 30px;
+}
+
+.user-story-board-inner:hover{
+	background-color: antiquewhite !important;
+}
+.user-story-board p {
+	margin-bottom: 0px;
+}
+
+#sprintRow {
+	margin-bottom: 10px;
+	margin-top: 10px;
+	margin-left:10px;
+}
+
+#USDetails p{
+	margin-bottom: 0px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a, .dropbtn {
+    display: inline-block;
+    color: white;
+	height: 38px;
+    text-align: center;
+    padding: 14px 16px;
+	padding-top: 6px;
+    text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+}
+
+li.dropdown {
+    display: inline-block;
+	height: 38px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    z-index: 1000;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.loadingGif{
+	display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('http://i.stack.imgur.com/FhHRx.gif') 
+                50% 50% 
+                no-repeat;
+}
+
+body.loading{
+	overflow:hidden;
+}
+
+.plus, .plus2{
+	background-image: url(https://www.colourbox.com/preview/17743898-black-vector-icon-isolated-on-transparent-background.jpg);
+	float: left;
+	background-repeat: no-repeat;
+    background-position-x: 100%;
+    background-size: contain;
+}
+
+pre {
+	margin-bottom: 0px;
+	overflow: hidden;
+}
+body.loading .loadingGif{
+	display:block
+}
+
+#SprintN:focus option:first-of-type{
+	display:none;
+}
+
+#AssignedTo:focus option:first-of-type{
+	display:none;
+}
+
+#State:focus option:first-of-type{
+	display:none;
+}
+
+#issue > a {
+	display:none;
+}
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+/* Media Queries */
+
+@media (max-width: 768px) {
+	#area{
+		max-height: calc(100% - 120px)
+	}
+	#backlog{
+		max-height: none !important
+	}
+	#board{
+		max-height: none !important
+	}
+	#board{
+		overflow-y: hidden !important
+	}
+	#area{
+		overflow-y: scroll !important;
+	}
+}
+@media (min-width: 0) and (max-width: 47em) {
+	.navbar {
+		background: #1d2a33;
+	}
+	.nav-items .nav-item {
+		float: none;
+	}
+	.nav-items .nav-link  {
+		padding: .65rem 0;
+		display: block;
+	}
+	.nav-items {
+		padding: 1rem 0;
+		clear: left;
+	}
+	.navbar .btn {
+		margin-left: 1rem;
+	}
+	.main {
+		padding-top: 6rem;
+	}
+}
+
+@media (min-width: 48em) { 
+	.navbar {
+		min-height: 70px;
+	}
+	.navbar-nav .container {
+		display: -webkit-flex;
+		display: flex;
+	}
+	.nav-items {
+		margin-right: auto;
+		margin-left: auto;
+	}
+	.main {
+		padding-top: 8rem;
+	}
+}
+

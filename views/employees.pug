@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    .row(style="padding-top: 10px; background-color: #f1f1f1;color: black; font-family: Segoe UI,Helvetica Neue,Helvetica,Arial,Verdana")
+      div(style="width:420px; margin-left: calc((100% - 420px) / 2) ")
+         h3 Project: #{project}
+         h6(style="margin-top:30px") There are currently #{ProjectEmployees.length} employees working on this project.
+         if(ProjectEmployees.length > 0)
+           h6 Employees working on this project:
+         each employee in ProjectEmployees
+             div(style="width:100%;margin-left:15px")
+                div.row(style="width: 100%; margin-left:10px")
+                  h6#FullNameAndTitle(style="width: 100%;display: inline-block;") #{employee.FullName}, #{employee.Title}
+
+         h6(style="margin-top:30px") Select the employee you want to add to the project:
+         form(method='POST' action='/employees')
+             div.form-group
+               label(for='Employee') Employee:
+                  select(name="Employee")
+                    for employee in AllEmployees
+                      option(value=employee._id) #{employee.FullName}
+             button.btn.btn-primary(type='submit') Add Employee to Project
+

@@ -1,0 +1,36 @@
+{{#> index title="overview"}}
+    {{#*inline "content-block"}}
+<div class="row" id="inc" style="padding-top: 10px; background-color: gray;color: black; font-family: Segoe UI,Helvetica Neue,Helvetica,Arial,Verdana">
+    <div style="width:420px; margin-left: calc((100% - 420px) / 2); background-color: #f1f1f1; padding: 10px 10px 10px 10px; border: 4px solid black; margin-top:20px; margin-bottom: 20px;">
+        <h3>Project: </h3>
+        <h6 style="margin-top:30px">There are currently {{ProjectEmployees.length}} employee(s) working on this project.</h6>
+        <h6>Employee(s) working on this project:</h6>
+        {{#each ProjectEmployees}}
+          <div style="width:100%;margin-left:15px">
+              <div class="row" style="width: 100%; margin-left:10px">
+                <h6 id="FullNameAndTitle" style="width: 100%;display: inline-block"></h6> {{FullName}} {{Title}}
+              </div>
+          </div>
+        {{/each}}
+        <h6 style="margin-top:30px">Select the employee you want to add to the project:</h6>
+        <form method="POST" action="/employees">
+            <div class="form-group">
+                <label for="Employee">Employee:
+                    <select name="Employee">
+                        {{#each AllEmployees}}
+                            <option value={{_id}}> {{FullName}} </option>
+                        {{/each}}
+                    </select>
+                </label>
+            </div>
+            <button class="btn btn-primary" type="submit">Add Employee to Project</button>
+        </form>
+    </div>
+</div>
+<script>
+    window.onload = function (e) {
+        document.getElementById("inc").style.height = window.innerHeight  + "px"
+    }
+</script>
+    {{/inline}}
+{{/index}}

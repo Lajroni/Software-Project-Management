@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    .row(style="padding-top: 10px;background-color: #f1f1f1; font-family: Segoe UI,Helvetica Neue,Helvetica,Arial,Verdana")
+      .col-md-8.col-md-offset-2.col-xs-10.col-xs-offset-1(style="min-height:500px;")
+        h1 Profile 
+        pre(style="font-size:20px") Name:       #{FullName}
+        pre(style="font-size:20px") Title:      #{Title}
+        pre(style="font-size:20px") Email:      #{Email}
+        pre(style="font-size:20px") EmployeeID: #{EmployeeID}

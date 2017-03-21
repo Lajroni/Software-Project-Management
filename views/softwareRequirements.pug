@@ -1,0 +1,25 @@
+﻿extends layout
+
+block content
+    .row(style="padding-top: 10px;background-color: #f1f1f1; font-family: Segoe UI,Helvetica Neue,Helvetica,Arial,Verdana")
+      .col-md-8.col-md-offset-2.col-xs-10.col-xs-offset-1
+         h3 Requirements for project: #{projectTitle}
+         -var index = 1
+         each requirement in requirements
+             div(style="width:100%; margin-bottom: 50px;")
+                h6 ID:         #{requirement.IDTag}
+                h6 Descripion: #{requirement.DescriptionTag}
+                h6 Author:     #{requirement.AuthorTag}
+         h4(style="margin-top:100px") Add requirements to project
+         div(style="font-size:15px")
+            form(method='POST' action='/softwareRequirements')
+                  div.form-group
+                     label(for='IDtag') ID:
+                     input#IDtag.form-control(type='text', placeholder='ID' name='IDtag')
+                  div.form-group
+                     label(for='DescriptionTag') Description: 
+                     input#DescriptionTag.form-control(type='text', placeholder='Descripion' name='DescriptionTag')
+                  div.form-group
+                     label(for='AuthorTag') Author:
+                     input#AuthorTag.form-control(type='text', placeholder='Author' name='AuthorTag')
+                  button.btn.btn-primary(type='submit') Add Requirement

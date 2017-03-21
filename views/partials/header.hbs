@@ -1,0 +1,55 @@
+<link href="/stylesheets/style.css" rel="stylesheet"/>
+<div class="row" style="margin: 0; height: 72px;padding: 0;border: 0;outline: 0;font-weight: inherit;font-style: inherit;font-size: 100%;font-family: inherit;vertical-align: baseline;box-sizing: border-box;background-clip: border-box;background-attachment: scroll;background-image: none;background-origin: padding-box">
+    <div style="margin: 0;height: 43px; line-height: 31px;padding: 0 20px;background: #007acc"><a class="navbar-brand" href="/" style="color: white; font-size:20px; min-width:310px; margin-right:0px"><i class="icn-logo material-icons">bookmark_border</i>Software Project Management</a>
+        <ul id="issue" style="height:200px; background-color: #007acc">
+           {{#if currentUser}}
+             <li class="hidden-sm-down" style="width: 100%">
+                <a class="btn btn-light pull-md-right" href="/project" style="border: 2px solid black">Projects</a>
+                <a class="btn btn-light pull-md-right" href="/employees" style="border: 2px solid black">Employees</a>
+                <a class="btn btn-light pull-md-right" href="/logout" style="border: 2px solid black">Log out</a>
+                <a class="btn btn-light pull-md-right" href="/profile?user=currentUser" style="border: 2px solid black">Profile</a>
+             </li>
+             <li class="dropdown hidden-md-up" style="width: calc(100% - 110px)"></li>
+             <li class="dropdown hidden-md-up"><a class="btn btn-light dropbtn pull-md-right" style="border: 2px solid black" href="javascript:void(0)">Dropdown</a>
+                <div class="dropdown-content" style="width:110px">
+                    <a href="/logout" style="border: 2px solid black;padding-top: 5px; padding-left: 30px; width: 110px">Logout</a>
+                    <a href="/projects" style="border: 2px solid black; padding-top: 5px; padding-left: 28px; width: 110px">Projects</a>
+                    <a class="btn btn-light" href="/profile?user=currentUser" style="border: 2px solid black; padding-top: 5px; padding-left: 30px; width: 110px">Profile</a>
+                    <a class="btn btn-light" href="/employees" style="border: 2px solid black; padding-top: 5px; padding-left: 15px; width: 110px">Employees</a>
+                </div>
+             </li>
+            {{else}}
+             <li style="width: 100%">
+                <a class="btn btn-light pull-md-right" href="/register" style="border: 2px solid black">Sign Up</a>
+                <a class="btn btn-light pull-md-right" href="/login" style="border: 2px solid black">Log In</a>
+             </li>
+            {{/if}}
+        </ul>
+    </div>
+    <div class="col-sm-12" style="margin: 0;height: 29px; line-height: 31px;padding: 0 0px;background-color: #CCC; color:black">
+        {{#if currentUser}}
+            <a class="nav-item nav-link" id="navSelect1" href="/overview" style="color: black;height: 100%;background-color: #CCC;padding-left: 20px;padding-right: 20px">Overview</a>
+            <a class="nav-item nav-link" id="navSelect2" href="/softwareRequirements" style="color: black;height: 100%;background-color: #CCC;padding-left: 20px;padding-right: 20px">Software Requirements</a>
+            <a class="nav-item nav-link" id="navSelect3" href="/userStories" style="color: black; height: 100%;background-color: #CCC;padding-left: 20px;padding-right: 20px; ">User Stories</a>
+            <a class="nav-item-nav-link" id="navSelect4" href="/sprints" style="color: black; height: 100%;display: inline-block;background-color: #CCC;padding-left: 20px;padding-right: 20px">Sprints</a></div>
+        {{else}}
+            <p> <a href="../login"> Log in </a> or <a href="../register"> register </a> to see options</p>
+        {{/if}}
+</div>
+
+<script>
+    if(window.location.pathname == '/overview' || window.location.pathname == '/softwareRequirements' || window.location.pathname == '/sprints' || window.location.pathname == '/userStories'){
+        var option = "navSelect" + {{navselect}};
+        if(option && option == "navselect-1"){
+            document.getElementById(option).style.backgroundColor = '#f1f1f1';
+        }
+    }
+    function responsiveNav() {
+        var x = document.getElementById("PrimaryNavContainer");
+        if (x.className === "PrimaryNavContainer") {
+            x.className += " responsive";
+        } else {
+            x.className = "PrimaryNavContainer";
+        }
+    }
+</script>

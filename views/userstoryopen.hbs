@@ -1,0 +1,274 @@
+{{#> index title="overview"}}
+{{#*inline "content-block"}}
+<div class="loadingGif" id="loadingGif" ></div>
+<div class="row" id="topRow" id={{_id}} style="display:none; padding-top: 10px; background-color: #f1f1f1; width: calc(100% - 10px); margin-left:5px; margin-right: 5px; height: calc(100% - 102px); font-family: Segoe UI,Helvetica Neue,Helvetica,Arial,Verdana">
+    <div class="row" style="border-bottom: 2px solid  gray; margin-bottom: 20px">
+        <div style="display: inline-block; margin-left: 15px"><a id="USIDText" style="font-size:23px">User Story 305:</a></div>
+        <div style="display: inline-block">
+            <h4 id="USTitle"> Edit the functionality of checkout</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12" style="background-color: #DDD; height: 200px">
+            <div class="col-xs-3"><b style="font-size:15px">Status</b>
+                <div class="row" style="margin-left:10px">
+                    <p style="display: inline-block; margin-bottom: 10px">Bug Status: </p>
+                    <select id="State" style="display: inline-block; float:right" name="status">
+                        <option value="new">New</option>
+                        <option value="active">Active</option>
+                        <option value="resolved">Resolved</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                </div>
+                <div class="row" style="margin-left:10px">
+                    <p style="display: inline-block; margin-bottom: 10px">Assigned To: </p>
+                    <select id="AssignedTo" style="display: inline-block;float:right" name="AssignedTo">
+                        <option value="AssignedToDef">Select an employee</option>
+                        {{# each Employees}}
+                            <option value="{{_id}}"> {{FullName}} </option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="row" style="margin-left:10px">
+                    <p style="display: inline-block; margin-bottom: 10px">Original Estimate:</p>
+                    <input id="EstimatedHours" type="text" name="EstimatedHours" style="font-size: 12px; display: inline-block;float:right"/>
+                </div>
+                <div class="row" style="margin-left:10px;">
+                    <p style="display: inline-block; margin-bottom: 10px">Completed:</p>
+                    <input id="HoursSpent" type="text" name="HoursSpent" style="font-size: 12px; display: inline-block;float:right"/>
+                </div>
+                <div class="row" style="margin-left:10px">
+                    <p style="display: inline-block; margin-bottom: 10px">Story Points:</p>
+                    <input id="StoryPoints" type="text" name="StoryPoints" value="" style="font-size: 12px; display: inline-block;float:right"/>
+                </div>
+                <div class="row" style="margin-left:10px">
+                    <p style="display: inline-block; margin-bottom: 10px">Override Parent US</p>
+                    <input class="plus2" id="addParent" type="text" name="addParent" style="font-size: 15px; width: 100px; display: inline-block;float:right"/>
+                </div>
+            </div>
+            <div class="col-xs-6" style="background-color: #FFF; height:100%; max-height:183px; overflow-y:auto; overflow-x:hidden"><b>Links</b>
+                <div class="row" style="margin-left:10px">
+                    <p style="margin-bottom:0px">Parent US</p>
+                    <div class="row">
+                        <div class="col-xs-1"></div>
+                        <div class="col-xs-11" id="USParentPlaceholder" style="width: 100%">
+                            <p style="margin-left:10px; color: red">No parent US</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-left:10px">
+                    <p style="margin-bottom:0px">Child US</p>
+                    <div class="row">
+                        <div class="col-xs-1"></div>
+                        <div class="col-xs-11" id="USChilds" style="width: 100%">
+                            <p style="margin-left:10px; color: red">No child US</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-left:10px">
+                    <p style="margin-bottom:0px">Related US</p>
+                    <div class="row">
+                        <div class="col-xs-1"></div>
+                        <div class="col-xs-11" id="USRelatives" style="width: 100%">
+                            <p style="margin-left:10px; color: red">No relative US</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3"><b>Data</b>
+                <div class="row" style="margin-left:10px">
+                    <p style="display: inline-block; margin-bottom: 10px">SprintN: </p>
+                    <select id="SprintN" style="display: inline-block;float:right" name="SprintN">
+                        <option value="SprintNDef">Choose Sprint</option>
+                        {{# each sprints}}
+                            <option value="{{_id}}"> {{SprintN}} </option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="row" style="margin-left:10px">
+                    <p style="display: inline-block; margin-bottom: 10px">Release:</p>
+                    <input id="Release" type="text" name="Release" style="font-size: 12px; display: inline-block;float:right"/>
+                </div>
+                <div class="row" style="margin-left:10px">
+                    <p style="margin-bottom:10px;display: inline-block">Requirement Link:</p><a id="RequirementLink" style="font-size: 15px; display: inline-block; float: right">Req 204</a>
+                </div>
+                <div class="row" style="margin-left:10px">
+                    <p style="margin-bottom:10px;display: inline-block">Project Link:</p><a id="ProjectLink" style="font-size: 15px; display: inline-block; float: right">Project 207</a>
+                </div>
+                <div class="row" style="margin-left:10px">
+                    <p style="margin-bottom:10px;display: inline-block; margin-bottom: 10px">Add Child US</p>
+                    <input class="plus" id="addChild" type="text" name="addChild" style="font-size: 15px; display: inline-block;float:right"/>
+                </div>
+                <div class="row" style="margin-left:10px">
+                    <p style="display: inline-block; margin-bottom: 10px">Add Relative US</p>
+                    <input class="plus" id="addRelative" type="text" name="addRelative" style="font-size: 15px; display: inline-block;float:right"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div style="display: inline-block; margin-left:10px; margin-bottom:10px;font-size: 15px"><a id="DESCText" style="display:none; font-weight:bold" onclick="description(true)">Description | </a><a id="COAText" style="display:none" onclick="description(false)">Conditions of Acceptance </a><a id="REPROText" style="display:none;font-weight:bold" onclick="repro(true)">Repro Steps |</a><a id="TCASEText" style="display:none" onclick="repro(false)">Test Cases </a></div>
+            <div style="display: inline-block; margin-left: 15px; width: 100%">
+                <textarea id="DESC" value="As a user, I want to be able to..." style="font-size: 20px; height: 150px; width: 95%; display:none"></textarea>
+                <textarea id="COA" value="COA 1: The user should be able to ..." style="font-size: 20px; height: 150px; width: 95%; display:none"></textarea>
+                <textarea id="REPRO" value="As a user, I want to be able to..." style="font-size: 20px; height: 150px; width: 95%;  display:none"></textarea>
+                <textarea id="TCASE" value="COA 1: The user should be able to ..." style="font-size: 20px; height: 150px; width: 95%; display:none "></textarea>
+            </div>
+        </div>
+        <div class="button btn btn-primary" style="float:right" id="Save" onclick="updateUS()" type="submit">Save Changes</div>
+        <div class="button btn btn-primary" style="float:right" id="OverviewBtn" onclick="goToOverview()" type="submit">Back to Overview</div>
+    </div>
+</div>
+{{/inline}}
+
+{{#*inline "script-block"}}
+<script>
+    function goToOverview(){
+     window.location = '/overview'
+    }
+    function updateUS(){
+        $.ajax({
+            url:"/updateUS",
+            async: false,
+            type:"post",
+            data: {_id: $("#editUserStory").attr("value"), StoryPoints: $("input[name=StoryPoints]").val(), EstimatedHours: $("input[name=EstimatedHours]").val(),
+                Release: $("input[name=Release]").val(), HoursSpent: $("input[name=HoursSpent]").val(), State: $("#State option:selected").text(), AssignedTo: $("#AssignedTo option:selected").val(),
+                SprintN: $("#SprintN option:selected").val(), Description: $("#DESC").val(), COAs: $("#COA").val(), ReproSteps: $("#REPRO").val(), TestCases: $("#TCASE").val() },
+            success:function(data2){
+                $("#closeEdit").click()
+                $("body").addClass("loading")
+                location.reload()
+            }
+        })
+    }
+    window.onload = function(e){
+        var result="";
+        $.ajax({
+            url:"/getData",
+            data: {_id: "{{_id}}"},
+            async: false,
+            type: "POST",
+            success:function(data) {
+                resultAll = data;
+                result = JSON.parse(data.UserStory)
+                if(data.Requirement && data.Requirement.length > 0 && data.Requirement != "null"){
+                    $("#RequirementLink").text(JSON.parse(data.Requirement).IDTag)
+                    $("#RequirementLink").attr("href", "/changeThisWhenRequirementHREFUpdated")
+                }
+                if(data.Project && data.Project.length > 0 && data.Project != "null"){
+                    $("#ProjectLink").text(JSON.parse(data.Project).Title)
+                    $("#ProjectLink").attr("href", "/changeThisWhenRequirementHREFUpdated")
+                }
+                if(data.USParent && data.USParent.length > 0 && data.USParent != "null"){
+                    var str = "<a style='font-size: 15px; margin-left:10px; width:100%; display: inline-block'>" + data.USParent[0].USID + ":" + data.USParent[0].Title + " </a>"
+                    $("#USParentPlaceholder").html(str)
+                }
+                if(data.USChild && data.USChild.length > 0 && data.USChild != "null"){
+                    var allChildUS = ""
+                    var str = "<a style='font-size: 15px; margin-left:10px; width:100%; display: inline-block'>"
+                    for(var i = 0; i < data.USChild.length; i++){
+                        allChildUS += str + data.USChild[i].USID + ": " + data.USChild[i].Title + "</a>"
+                    }
+                    $("#USChilds").html(allChildUS)
+                }
+                if(data.USRelative && data.USRelative.length > 0 && data.USRelative != "null"){
+                    var allChildUS = ""
+                    var str = "<a style='font-size: 15px; margin-left:10px; width:100%; display: inline-block'>"
+                    for(var i = 0; i < data.USRelative.length; i++){
+                        allChildUS += str + data.USRelative[i].USID + ": " + data.USRelative[i].Title + "</a>"
+                    }
+                    $("#USRelatives").html(allChildUS)
+                }
+                $("input[name=StoryPoints]").attr("value", result.StoryPoints)
+                $("input[name=EstimatedHours]").attr("value", result.EstimatedHours)
+                $("input[name=HoursSpent]").attr("value", result.HoursSpent)
+                $("input[name=Release]").attr("value", result.Release)
+                var text2 = "select option[value='" + result.SprintN + "']"
+                $(text2).prop("selected",true)
+                text2 = "select option[value='" + result.AssignedTo + "']"
+                $(text2).prop("selected", true)
+                text2 = "select option[value='" + result.State + "']"
+                $(text2.toLowerCase()).prop("selected", true)
+                if(result.isBug){
+                    $("#DESC").css("display", "none")
+                    $("#COA").css("display", "none")
+                    $("#DESCText").css("display", "none")
+                    $("#COAText").css("display", "none")
+                    $("#REPRO").css("display", "block")
+                    $("#TCASE").css("display", "none")
+                    $("#REPROText").css("display", "inline-block")
+                    $("#TCASEText").css("display", "inline-block")
+                }else{
+                    $("#DESC").css("display", "block")
+                    $("#COA").css("display", "none")
+                    $("#DESCText").css("display", "inline-block")
+                    $("#COAText").css("display", "inline-block")
+                    $("#REPRO").css("display", "none")
+                    $("#TCASE").css("display", "none")
+                    $("#REPROText").css("display", "none")
+                    $("#TCASEText").css("display", "none")
+                }
+                $("#DESC").text(result.Description)
+                $("#COA").text(result.COAs)
+                $("#REPRO").text(result.ReproSteps)
+                $("#TCASE").text(result.TestCases)
+                $("#USIDText").html(result.USID + ":")
+                $("#USTitle").html(result.Title)
+                var val = "#AssignedTo option:eq(" + result.AssignedTo + ")"
+                $(val).attr("select", "selected")
+            }
+        });
+        document.getElementById("topRow").style.display = "block"
+        document.getElementById("loadingGif").style.display = "none"
+        return result;
+    };
+    $(".plus").click(function(e) {
+        var x = e.pageX - $(this).offset().left;
+        var y = e.pageY - $(this).parent().parent().offset().top;
+        if(x > 142){
+            if(y < 143){
+                addUSLink( $("input[name=addChild]").val() , true, false)
+            }
+            else{
+                addUSLink( $("input[name=addRelative]").val() , false, false)
+            }
+        }
+    })
+    $(".plus2").click(function(e) {
+        if((e.pageX - $(this).offset().left) > 80)
+            addUSLink( $("input[name=addParent]").val() , false, true)
+    })
+    function addUSLink(USID, child, parent){
+        $.ajax({
+            url:"/addUSLink",
+            async: false,
+            type:"post",
+            data: {_id: $("#editUserStory").attr("value"), isChild: child, isParent: parent, UserStoryID: USID},
+            success: function(data){
+                var str = "<a style='font-size: 15px; margin-left:10px; width: 100%; display: inline-block'>" + data.US.USID + ": " + data.US.Title + "</a>"
+                if(data.type == "1"){
+                    $("#USParentPlaceholder").html(str)
+                }
+                else if(data.type == "2"){
+                    $("#USChilds").append(str)
+                }
+                else{
+                    $("#USRelatives").append(str)
+                }
+            }
+        })
+    }
+    function description(desc){
+        $("#DESC").css("display", desc ? "block" : "none")
+        $("#COA").css("display", desc ? "none" : "block")
+        $("#DESCText").css("font-weight", desc ? "bold" : "normal")
+        $("#COAText").css("font-weight", desc ? "normal" : "bold")
+    }
+    function repro(repro){
+        $("#REPRO").css("display", repro ? "block" : "none")
+        $("#TCASE").css("display", repro ? "none" : "block")
+        $("#REPROText").css("font-weight", repro ? "bold" : "normal")
+        $("#TCASEText").css("font-weight", repro ? "normal" : "bold")
+    }
+    </script>
+{{/inline}}
+{{/index}}

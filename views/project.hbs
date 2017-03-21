@@ -1,0 +1,55 @@
+{{#> index title="overview"}}
+    {{#*inline "content-block"}}
+<div class="row" style="background-color: gray; padding-top: 10px">
+    <div class="col-md-8 col-md-offset-2" style="background-color: #f1f1f1; border: 5px solid black; padding: 10px 10px 10px 10px; margin-bottom:50px; margin-top:20px;">
+        <h5>Select the project you want to navigate to or add new project(s)         </h5>
+          {{#each projects}}
+            <div style="width:100%;margin-left:15px; margin-bottom: 20px;">
+                <div class="row" style="width: 100%">
+                    <label for="title" style="font-size: 15px; width: 30%">Project ID/Title: </label>
+                    <a class="nav-item nav-link" id="title" href="/project/?project={{_id}}" style="font-size: 15px;width: 60%"> {{ProjectID}} </a>
+                </div>
+                <div class="row" style="width: 100%">
+                    <label for="Description" style="width: 30%;display: inline-block">Description: </label>
+                    <h6 id="Description" style="width: 60%;display: inline-block"> {{DescriptionTag}}</h6>
+                </div>
+                <div class="row" style="width: 100%">
+                    <label for="ProductOwner" style="width: 30%;display: inline-block">Product Owner: </label>
+                    <h6 id="ProductOwner" style="width: 60%;display: inline-block"> {{ProductOwner}}</h6>
+                </div>
+                <div class="row" style="width: 100%">
+                    <label for="ProductManager" style="width: 30%;display: inline-block">Product Manager: </label>
+                    <h6 id="ProductManager" style="width: 60%;display: inline-block"> {{ProductManager}} </h6>
+                </div>
+            </div>
+          {{/each}}
+        <div id="newProject" style="margin-top:50px; font-size:15px">
+            <h3>Add a new project:</h3>
+            <form method="POST" action="/addProject">
+                <div class="form-group">
+                    <label for="ProjectID">Project Title/ID:</label>
+                    <input class="form-control" id="ProjectID" type="text" placeholder="Project Title/ID" name="ProjectID"/>
+                </div>
+                <div class="form-group">
+                    <label for="ProjectName">Project Name:</label>
+                    <input class="form-control" id="ProjectName" type="text" placeholder="Project Name" name="ProjectName"/>
+                </div>
+                <div class="form-group">
+                    <label for="DescriptionTag">Description:</label>
+                    <input class="form-control" id="DescriptionTag" type="text" placeholder="Description" name="DescriptionTag"/>
+                </div>
+                <div class="form-group">
+                    <label for="ProductOwner">ProductOwner:</label>
+                    <input class="form-control" id="ProductOwner" type="text" placeholder="Product Owner" name="ProductOwner"/>
+                </div>
+                <div class="form-group">
+                    <label for="ProductManager">Product Manager:</label>
+                    <input class="form-control" id="ProductManager" type="text" placeholder="Product Manager" name="ProductManager"/>
+                </div>
+                <button class="btn btn-primary" type="submit">Add Project</button>
+            </form>
+        </div>
+    </div>
+</div>
+{{/inline}}
+{{/index}}

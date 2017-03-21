@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    .row(style="padding-top: 10px; background-color: #f1f1f1; font-family: Segoe UI,Helvetica Neue,Helvetica,Arial,Verdana")
+      .col-md-8.col-md-offset-2.col-xs-10.col-xs-offset-1
+         h3 Sprints for project: #{projectTitle}
+         -var index = 1
+         each Sprint in Sprints
+             div(style="width:100%; margin-bottom: 50px;")
+                h6 Sprint Number:         #{Sprint.SprintN}
+                    each US in Sprint.UserStories
+                        h6 US.USID
+         h4(style="margin-top:20px") Add User Stories
+         div(style="font-size:15px")
+            form(method='POST' action='/sprints')
+                  div.form-group
+                     label(for='SprintN') Sprint Number:
+                     input#SprintN.form-control(type='text', placeholder='Sprint Number' name='SprintN')
+                  div.form-group
+                     label(for='Description') Description: 
+                     input#Description.form-control(type='text', placeholder='Description' name='Description')
+                  button.btn.btn-primary(type='submit' style="display:flex;") Add Sprint

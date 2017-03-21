@@ -1,0 +1,54 @@
+extends layout
+
+block content
+    .row(style="padding-top: 10px; background-color: #f1f1f1; font-family: Segoe UI,Helvetica Neue,Helvetica,Arial,Verdana")
+      .col-lg-10.col-lg-offset-1.col-xs-12
+         h3 User Stories for project: #{projectTitle}
+         -var index = 1
+         each US in UserStories
+             if US.isBug
+               - var inlineUS = "border: solid 3px rgb(204, 41, 61); margin-bottom: 10px;"
+             else
+               - var inlineUS = "border: solid 3px #009ccc; margin-bottom: 10px;"
+             div#USDetails.col-lg-4.col-md-6.col-sm-6.col-xs-12
+              .col-xs-12(style=inlineUS)
+                b US ID:         #{US.USID}
+                p Title:         #{US.Title}
+                p Description:   #(US.Description)
+                p Author:        #{US.AuthorTag}
+                p Sprint:        #{US.Sprint}
+                p Story Points:  #{US.StoryPoints}
+                p Release:       #{US.Release}
+    .row
+      h4.col-xs-8.col-xs-offset-2(style="height:100%") Add User Stories
+         div(style="font-size:15px")
+            form(method='POST' action='/userStories')
+                  div.form-group
+                     label(for='USID') User Story ID:
+                     input#USID.form-control(type='text', placeholder='User Story ID' name='USID')
+                  div.form-group
+                     label(for='Description') Description: 
+                     input#Description.form-control(type='text', placeholder='Description' name='Description')
+                  div.form-group
+                     label(for='Title') Title:
+                     input#Title.form-control(type='text', placeholder='Title' name='Title')
+                  div.form-group
+                     label(for="US", style="margin-left:20%") User Story
+                     input(type="radio", id="US" name="USorBug", value="1", checked="checked")
+                     label(for="Bug",  style="margin-left:28%") Bug
+                     input(type="radio", id="Bug" name="USorBug", value="0")
+                  div.form-group
+                     label(for='Estimated') Estimated hours:
+                     input#Estimated.form-control(type='text', placeholder='Estimated hours' name='Estimated')     
+                  div.form-group
+                     label(for='Release') Release:
+                     input#Release.form-control(type='text', placeholder='Release' name='Release')  
+                  div.form-group
+                     label(for='StoryPoints') Story Points:
+                     input#StoryPoints.form-control(type='text', placeholder='Story Points' name='StoryPoints')
+                  div.form-group
+                     label(for='SpritnN') Sprint:
+                     select(name="SprintN")
+                        for sprint in Sprints
+                           option(value=sprint._id) #{sprint.SprintN}
+                  button.btn.btn-primary(type='submit') Add User Story
